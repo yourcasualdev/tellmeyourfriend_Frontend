@@ -1,7 +1,8 @@
 import { useState } from "react";
 import './questions.css'
+import axios from 'axios';
 
-const Questions = ({ questions }) => {
+const Questions = ({ questions, name }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState(["", "", "", ""]);
 
@@ -12,7 +13,7 @@ const Questions = ({ questions }) => {
   };
 
   const handleNextQuestion = () => {
-    if (currentQuestion < questions.length - 1) {
+    if (currentQuestion < questions.questions.length - 1) {
       setCurrentQuestion((prevQuestion) => prevQuestion + 1);
     }
   };
@@ -24,8 +25,21 @@ const Questions = ({ questions }) => {
   };
 
   const handleSubmit = () => {
-    console.log(answers);
-  };
+    const form = {
+      game: questions._id,
+      name,
+      answers: answers.map((answer, index) => ({
+        answer: answer,
+        isTrue: questions.questions[index].correctAnswer === answer ? true : false,
+      })),
+      score: answers.map((answer, index) => {
+        if (questions.questions[index].correctAnswer === answer) {
+          return 1;
+        }
+      }).filter((num) => { return num === 1 }).length,
+    };
+    axios.post(`http://localhost:5000/api/game/${questions._id}`, { body: form });
+  }
 
   const isSelected = (answer) => {
     return answers[currentQuestion] === answer ? "blue" : "green";
@@ -33,10 +47,9 @@ const Questions = ({ questions }) => {
 
   return (
     <div className="question-wrapper">
-      <div className="question-id">{questions[currentQuestion].id}</div>
-      <div className="question-title">{questions[currentQuestion].question}</div>
+      <div className="question-title">{questions.questions[currentQuestion].question}</div>
       <div className="question-answers">
-        {questions[currentQuestion].options.map((answer) => (
+        {questions.questions[currentQuestion].answers.map((answer) => (
           <button style={{ backgroundColor: isSelected(answer) }} className="question-answer" onClick={() => {
             handleAnswer(answer);
 
@@ -44,6 +57,7 @@ const Questions = ({ questions }) => {
             {answer}
           </button>
         ))}
+        { }
       </div>
       <button className="question-prev" onClick={() => { handlePrevQuestion(); }}>
         Prev
@@ -51,11 +65,11 @@ const Questions = ({ questions }) => {
       <button className="question-newxt" onClick={() => { handleNextQuestion(); }}>
         Next
       </button>
-      {
-        questions[currentQuestion].id === questions.length && (
-          <button onClick={handleSubmit}>Submit</button>
-        )
-      }
+      {currentQuestion === questions.questions.length - 1 && (
+        <button className="question-submit" onClick={() => { handleSubmit(); }}>
+          Submit
+        </button>
+      )}
     </div>
   )
 }

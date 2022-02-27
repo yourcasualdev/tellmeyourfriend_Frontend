@@ -1,26 +1,22 @@
 import React, { useState } from 'react'
 import Questions from '../../components/questions/Questions';
 
-const Game = ({ setForm, questions }) => {
+const Game = ({ questions }) => {
     const [page, setPage] = useState("askname");
-    const [state, setState] = useState({
-        name: "",
-        answers: [],
-    })
+    const [name, setName] = useState("");
     return (
         <div>
-            {page === "askname" && <Askname state={state} setState={setState} setPage={setPage} />}
-            {page === "askquestions" && <Questions state={state} setState={setState} setPage={setPage} questions={questions} />}
+            {page === "askname" && <Askname name={name} setName={setName} setPage={setPage} />}
+            {page === "askquestions" && <Questions name={name} setPage={setPage} questions={questions} />}
         </div>
     )
 }
 
-const Askname = ({ state, setState, setPage }) => {
-    const [name, setName] = useState("")
+const Askname = ({ name, setName, setPage }) => {
     return (
         <div>
             <input type="text" value={name} onChange={(e) => { setName(e.target.value) }} />
-            <button onClick={() => { setState({ name: name, answers: [] }); setPage("askquestions") }}>Start</button>
+            <button onClick={() => { setPage("askquestions") }}>Start</button>
         </div>
     )
 }
