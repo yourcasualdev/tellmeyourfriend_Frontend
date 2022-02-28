@@ -1,9 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Questions from '../../components/questions/Questions';
 
-const Game = ({ questions }) => {
+const Game = () => {
+    const [questions, setQuestions] = useState([]);
     const [page, setPage] = useState("askname");
     const [name, setName] = useState("");
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const slug = window.location.href.split('/')[4]
+            const url = `http://localhost:5000/api/game/${slug}`;
+            const response = await fetch(url);
+            const data = await response.json();
+            setQuestions(data);
+            console.log(data);
+        }
+        fetchData();
+    }, []);
+
     return (
         <div>
             {page === "askname" && <Askname name={name} setName={setName} setPage={setPage} />}
