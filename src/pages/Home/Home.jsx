@@ -1,8 +1,13 @@
-import React from 'react'
+import './home.css'
 
 const Home = () => {
     return (
-        <div>Home</div>
+        <div>
+            <h1 className='title'>Tell Me Your Friend</h1>
+            <div className="game-url">
+                <a href="/game/create">Oyunu Oyna</a>
+            </div>
+        </div>
     )
 }
 
