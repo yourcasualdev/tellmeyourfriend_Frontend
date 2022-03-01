@@ -1,5 +1,7 @@
+import { Button, TextField } from '@mui/material';
 import React, { useState, useEffect } from 'react'
 import Questions from '../../components/questions/Questions';
+import './game.css'
 
 const Game = () => {
     const [questions, setQuestions] = useState([]);
@@ -28,9 +30,10 @@ const Game = () => {
 
 const Askname = ({ name, setName, setPage }) => {
     return (
-        <div>
-            <input type="text" value={name} onChange={(e) => { setName(e.target.value) }} />
-            <button onClick={() => { setPage("askquestions") }}>Start</button>
+        <div className='ask-name'>
+            <h1>Merhaba Adı?</h1>
+            <TextField label="Outlined" variant="outlined" value={name} onChange={(e) => { setName(e.target.value) }} />
+            <Button variant="contained" onClick={() => { setPage("askquestions") }} >Başla!</Button>
         </div>
     )
 }

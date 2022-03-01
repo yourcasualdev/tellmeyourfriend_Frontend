@@ -1,6 +1,7 @@
 import { useState } from "react";
 import './questions.css'
 import axios from 'axios';
+import { useHistory } from "react-router-dom";
 
 const Questions = ({ questions, name }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -24,7 +25,7 @@ const Questions = ({ questions, name }) => {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const form = {
       game: questions._id,
       name,
@@ -38,7 +39,9 @@ const Questions = ({ questions, name }) => {
         }
       }).filter((num) => { return num === 1 }).length,
     };
-    axios.post(`http://localhost:5000/api/game/${questions._id}`, { body: form });
+    await axios.post(`http://localhost:5000/api/game/${questions._id}`, { body: form });
+    window.location.href = (`http://localhost:3000/game/leaderboard/${questions._id}`);
+
   }
 
   const isSelected = (answer) => {
