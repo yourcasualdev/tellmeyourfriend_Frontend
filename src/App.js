@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
 import Game from "./pages/Game/Game";
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import CreateGame from "./pages/CreateGame/CreateGame";
 import LeaderBoard from "./pages/LeaderBoard/LeaderBoard";
 import Header from "./components/Header/Header";
+
 
 
 function App() {

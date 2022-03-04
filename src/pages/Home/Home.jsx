@@ -23,7 +23,7 @@ const Home = () => {
 
                 <button style={{ display: id ? "" : "none" }} onClick={() => window.location.href = `/game/leaderboard/${id}`} className='btn btn-success btn-lg'>Skor Tablosu</button>
 
-                <button style={{ display: id ? "" : "none" }} className='btn btn-success btn-lg m-2' onClick={(e) => navigator.clipboard.writeText(`http://localhost:3000/game/${id}`)}>Linki Kopyala</button>
+                <button style={{ display: id ? "" : "none" }} className='btn btn-success btn-lg m-2' onClick={(e) => navigator.clipboard.writeText(`https://tellmeyourfriend.ibrahimbabal.com/game/${id}`)}>Linki Kopyala</button>
 
                 <p class="fst-italic mt-4">Linki kopyalayıp arkadaşlarınla paylaş!</p>
             </div>

@@ -38,7 +38,7 @@ const Questions = ({ questions, name }) => {
       }).filter((num) => { return num === 1 }).length,
     };
     await axios.post(`https://tellmeyourfriend.herokuapp.com/api/game/${questions._id}`, { body: form });
-    window.location.href = (`http://localhost:3000/game/leaderboard/${questions._id}`);
+    window.location.href = (`https://tellmeyourfriend.ibrahimbabal.com/game/leaderboard/${questions._id}`);
 
   }
 

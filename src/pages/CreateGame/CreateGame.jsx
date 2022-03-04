@@ -205,7 +205,7 @@ const Submit = ({ form, setsessionURL }) => {
             const URL = "a"
             setsessionURL(URL);
             await localStorage.setItem('id', id);
-            window.location.href = 'http://localhost:3000';
+            window.location.href = 'https://tellmeyourfriend.ibrahimbabal.com';
         }
         else {
             alert("6 Soru Girmelisin")
