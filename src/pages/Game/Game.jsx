@@ -1,7 +1,6 @@
 import { Button, TextField } from '@mui/material';
 import React, { useState, useEffect } from 'react'
 import Questions from '../../components/questions/Questions';
-import './game.css'
 
 const Game = () => {
     const [questions, setQuestions] = useState([]);
@@ -11,7 +10,7 @@ const Game = () => {
     useEffect(() => {
         const fetchData = async () => {
             const slug = window.location.href.split('/')[4]
-            const url = `http://localhost:5000/api/game/${slug}`;
+            const url = `https://tellmeyourfriend.herokuapp.com/api/game/${slug}`;
             const response = await fetch(url);
             const data = await response.json();
             setQuestions(data);
@@ -21,8 +20,9 @@ const Game = () => {
     }, []);
 
     return (
-        <div>
-            <header className='header'>Tell Me Your Friend</header>
+        <div style={{ marginTop: "120px", textAlign: 'center' }}>
+            <h1 className='fw-bold'>{questions.name} Adlı oyuncunun oyunu</h1>
+            <p className='text-muted'>Soruları cevapla Ve gönder</p>
             {page === "askname" && <Askname name={name} setName={setName} setPage={setPage} />}
             {page === "askquestions" && <Questions name={name} setPage={setPage} questions={questions} />}
         </div>
@@ -31,10 +31,12 @@ const Game = () => {
 
 const Askname = ({ name, setName, setPage }) => {
     return (
-        <div className='ask-name'>
-            <h1 className='welcome-message'>Merhaba Adın?</h1>
-            <TextField style={{}} label="Adın" variant="outlined" value={name} onChange={(e) => { setName(e.target.value) }} />
-            <Button style={{ backgroundColor: "#50394C" }} variant="contained" onClick={() => { setPage("askquestions") }} >Başla!</Button>
+        <div className='container'>
+            <h1 className='fw-bold'>Merhaba Adın?</h1>
+            <div className="row">
+                <input className='input-group-text mt-2' value={name} onChange={(e) => { setName(e.target.value) }} />
+                <button className='btn btn-warning mt-2' onClick={() => { setPage("askquestions") }} > Başla!</button>
+            </div>
         </div>
     )
 }

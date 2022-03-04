@@ -1,7 +1,5 @@
 import { useState } from "react";
-import './questions.css'
 import axios from 'axios';
-import { useHistory } from "react-router-dom";
 
 const Questions = ({ questions, name }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -39,42 +37,94 @@ const Questions = ({ questions, name }) => {
         }
       }).filter((num) => { return num === 1 }).length,
     };
-    await axios.post(`http://localhost:5000/api/game/${questions._id}`, { body: form });
+    await axios.post(`https://tellmeyourfriend.herokuapp.com/api/game/${questions._id}`, { body: form });
     window.location.href = (`http://localhost:3000/game/leaderboard/${questions._id}`);
 
   }
 
   const isSelected = (answer) => {
-    return answers[currentQuestion] === answer ? "#75446f" : "#50394C";
+    return answers[currentQuestion] === answer ? "#75446f" : "#f0ad4e";
   };
 
   return (
-    <div className="question-wrapper">
-      <div className="question-title">{questions.questions[currentQuestion].question}</div>
-      <div className="question-answers">
-        {questions.questions[currentQuestion].answers.map((answer) => (
-          <button style={{ backgroundColor: isSelected(answer), color: "white" }} className="question-answer" onClick={() => {
-            handleAnswer(answer);
+    <div className="container">
+      <div className="fw-bold">{questions.questions[currentQuestion].question}</div>
 
-          }}>
-            {answer}
+      <div className="col">
+        <div className="row-md-6">
+          <button
+            className="btn btn-outline-dark"
+            style={{ width: "150px", height: "150px", backgroundColor: isSelected(questions.questions[currentQuestion].answers[0]) }}
+            onClick={() => handleAnswer(questions.questions[currentQuestion].answers[0])}
+          >
+            {questions.questions[currentQuestion].answers[0]}
           </button>
-        ))}
-        { }
+          <button
+            className="btn btn-outline-dark p-5"
+            style={{ width: "150px", height: "150px", backgroundColor: isSelected(questions.questions[currentQuestion].answers[1]) }}
+            onClick={() => handleAnswer(questions.questions[currentQuestion].answers[1])}
+          >
+            {questions.questions[currentQuestion].answers[1]}
+          </button>
+        </div>
       </div>
-      <button className="question-prev" onClick={() => { handlePrevQuestion(); }}>
-        Prev
+
+      <div className="col">
+        <div className="row-md-6">
+          <button
+            className="btn btn-outline-dark p-5"
+            style={{ width: "150px", height: "150px", backgroundColor: isSelected(questions.questions[currentQuestion].answers[2]) }}
+            onClick={() => handleAnswer(questions.questions[currentQuestion].answers[2])}
+          >
+            {questions.questions[currentQuestion].answers[2]}
+          </button>
+          <button
+            className="btn btn-outline-dark p-5"
+            style={{ width: "150px", height: "150px", backgroundColor: isSelected(questions.questions[currentQuestion].answers[3]) }}
+            onClick={() => handleAnswer(questions.questions[currentQuestion].answers[3])}
+          >
+            {questions.questions[currentQuestion].answers[3]}
+          </button>
+        </div>
+      </div>
+
+      <div className="col">
+        <div className="row-md-6">
+          <button
+            className="btn btn-outline-dark p-5"
+            style={{ width: "150px", height: "150px", backgroundColor: isSelected(questions.questions[currentQuestion].answers[4]) }}
+            onClick={() => handleAnswer(questions.questions[currentQuestion].answers[4])}
+          >
+            {questions.questions[currentQuestion].answers[4]}
+          </button>
+          <button
+            className="btn btn-outline-dark p-5"
+            style={{ width: "150px", height: "150px", backgroundColor: isSelected(questions.questions[currentQuestion].answers[5]) }}
+            onClick={() => handleAnswer(questions.questions[currentQuestion].answers[5])}
+          >
+            {questions.questions[currentQuestion].answers[5]}
+          </button>
+        </div>
+      </div>
+
+      <button className="btn btn-light" onClick={() => { handlePrevQuestion(); }}>
+        Önceki
       </button>
-      <button className="question-newxt" onClick={() => { handleNextQuestion(); }}>
-        Next
+      <button className="btn btn-dark" onClick={() => { handleNextQuestion(); }}>
+        Sonraki
       </button>
       {currentQuestion === questions.questions.length - 1 && (
-        <button className="question-submit" onClick={() => { handleSubmit(); }}>
-          Submit
+        <button className="btn btn-danger" onClick={() => { handleSubmit(); }}>
+          Gönder
         </button>
       )}
     </div>
   )
 }
 
+const Button = ({ name, handleAnswer }) => {
+  return (
+    <button className="btn btn-warning px-5 mt-2" onClick={() => handleAnswer(name)}>{name}</button>
+  )
+}
 export default Questions

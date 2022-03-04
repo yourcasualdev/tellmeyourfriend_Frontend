@@ -1,7 +1,5 @@
-import { Link } from 'react-router-dom'
 import './home.css'
 import { useState, useEffect } from 'react'
-import { Button } from '@mui/material';
 
 const Home = () => {
     const [id, setId] = useState('');
