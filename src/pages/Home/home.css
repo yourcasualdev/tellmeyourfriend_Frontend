@@ -1,11 +1,18 @@
-.title{
-    font-size: 60px;
-    text-align: center;
-    margin-top: 100px;
+.paper{
+    height:100vh;
 }
 
-.game-url{
-    font-size: 30px;
-    text-align: center;
+
+.container {
     margin-top: 100px;
+    padding: 20px;
+    text-align: center;
+    color: black;
+    font-size: 30px;
+}
+
+.text {
+    color: #F4E1D2;
+    font-size: 30px;
+    text-decoration: none;
 }

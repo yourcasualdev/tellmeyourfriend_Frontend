@@ -4,6 +4,7 @@ import { Routes, Route, Link } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import CreateGame from "./pages/CreateGame/CreateGame";
 import LeaderBoard from "./pages/LeaderBoard/LeaderBoard";
+import Header from "./components/Header/Header";
 
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
 
   return (
     <div className="App">
+      <Header />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/game/:slug" element={<Game />} />

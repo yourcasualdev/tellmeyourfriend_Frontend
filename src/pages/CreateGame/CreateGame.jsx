@@ -1,5 +1,4 @@
 import { useState } from 'react'
-
 const CreateGame = () => {
     const [form, setForm] = useState({
         name: '',
@@ -12,18 +11,17 @@ const CreateGame = () => {
 
     return (
         <div>
-            <ShowQuestions form={form} />
-            <AddQuestion form={form} setForm={setForm} />
-            <Submit form={form} setsessionURL={setsessionURL} />
-            {sessionURL ? showUrl(sessionURL) : null}
-
+            {!sessionURL && <AddQuestion form={form} setForm={setForm} />}
+            {!sessionURL && <Submit form={form} setsessionURL={setsessionURL} />}
+            {!sessionURL && <ShowQuestions form={form} />}
         </div>
     )
 }
 
 const AddQuestion = ({ form, setForm }) => {
     return (
-        <div>
+        <div className='container'>
+
             <div className="game-title">
                 <h1>Yeni bir Oyun Oluştur</h1>
             </div>
@@ -31,7 +29,7 @@ const AddQuestion = ({ form, setForm }) => {
                 <label>Adın Nedir ?</label>
                 <input type="text" value={form.name} onChange={(e) => { setForm({ ...form, name: e.target.value }) }} />
             </div>
-            <form>
+            <form className='question-form'>
                 <div className="question-input">
                     <label>Soru</label>
                     <input type="text" id='question' />
@@ -69,22 +67,44 @@ const AddQuestion = ({ form, setForm }) => {
                 <div className="addQuestionButton">
                     <button onClick={(e) => {
                         e.preventDefault();
-                        setForm({
-                            ...form, questions: [...form.questions, {
-                                question: document.getElementById('question').value,
-                                answers: [
-                                    document.getElementById('answer0').value,
-                                    document.getElementById('answer1').value,
-                                    document.getElementById('answer2').value,
-                                    document.getElementById('answer3').value,
-                                    document.getElementById('answer4').value,
-                                    document.getElementById('answer5').value,
-                                ],
-                                correctAnswer: document.getElementById('correctAnswer').value,
-                            }]
-                        }
+                        //look if true answer is in answers
+                        const answers = [...document.querySelectorAll('#answer0, #answer1, #answer2, #answer3, #answer4, #answer5')];
+                        const correctAnswer = document.querySelector('#correctAnswer').value;
+                        const answersArray = answers.map(answer => answer.value);
+                        if (answersArray.includes(correctAnswer)) {
+                            //look if not more than 6 answers
+                            if (form.questions.length < 6) {
+                                setForm({
+                                    ...form, questions: [...form.questions, {
+                                        question: document.getElementById('question').value,
+                                        answers: [
+                                            document.getElementById('answer0').value,
+                                            document.getElementById('answer1').value,
+                                            document.getElementById('answer2').value,
+                                            document.getElementById('answer3').value,
+                                            document.getElementById('answer4').value,
+                                            document.getElementById('answer5').value,
+                                        ],
+                                        correctAnswer: document.getElementById('correctAnswer').value,
+                                    }]
+                                }
 
-                        )
+                                )
+                                //empty all inputs
+                                document.getElementById('question').value = '';
+                                document.getElementById('answer0').value = '';
+                                document.getElementById('answer1').value = '';
+                                document.getElementById('answer2').value = '';
+                                document.getElementById('answer3').value = '';
+                                document.getElementById('answer4').value = '';
+                                document.getElementById('answer5').value = '';
+                                document.getElementById('correctAnswer').value = '';
+                            } else {
+                                alert('En fazla 6 soru ekleyebilirsiniz')
+                            }
+                        } else {
+                            alert('Doğru cevap doğru cevap olarak seçilmelidir')
+                        }
                     }
 
                     }>Add Question</button>
@@ -118,24 +138,35 @@ const ShowQuestions = ({ form }) => {
     )
 }
 
+
 //post to api
 const Submit = ({ form, setsessionURL }) => {
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const response = await fetch('http://localhost:5000/api/game/newgame', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                name: form.name,
-                questions: form.questions
-            })
 
-        });
-        const URL = `http://localhost:3000/game/${await response.json()}`;
-        setsessionURL(URL);
-        console.log(URL)
+    //check if questions 4 long
+
+    const handleSubmit = async (e) => {
+        if (form.questions.length === 6) {
+            e.preventDefault();
+            const response = await fetch('http://localhost:5000/api/game/newgame', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name: form.name,
+                    questions: form.questions
+                })
+
+            });
+            const URL = `http://localhost:3000/game/${await response.json()}`;
+            setsessionURL(URL);
+            //add session url to local storage
+            localStorage.setItem('id', await response.json());
+            window.location.href = '/';
+        }
+        else {
+            alert("6 Soru Girmelisin")
+        }
     }
 
     return (
@@ -145,19 +176,8 @@ const Submit = ({ form, setsessionURL }) => {
     )
 }
 
-const showUrl = (sessionURL) => {
-    return (
-        <div>
-            <a href={sessionURL}>{sessionURL}</a>
-            <button onClick={(e) => {
-                e.preventDefault();
-                navigator.clipboard.writeText(sessionURL);
-            }} >
-                Copy to Clipboard
-            </button>
-        </div>
-    )
-}
+
+
 
 
 

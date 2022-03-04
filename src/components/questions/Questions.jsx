@@ -5,7 +5,7 @@ import { useHistory } from "react-router-dom";
 
 const Questions = ({ questions, name }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [answers, setAnswers] = useState(["", "", "", ""]);
+  const [answers, setAnswers] = useState(["", "", "", "", "", ""]);
 
   const handleAnswer = (answer) => {
     const newAnswers = [...answers];
@@ -45,7 +45,7 @@ const Questions = ({ questions, name }) => {
   }
 
   const isSelected = (answer) => {
-    return answers[currentQuestion] === answer ? "blue" : "green";
+    return answers[currentQuestion] === answer ? "#75446f" : "#50394C";
   };
 
   return (
@@ -53,7 +53,7 @@ const Questions = ({ questions, name }) => {
       <div className="question-title">{questions.questions[currentQuestion].question}</div>
       <div className="question-answers">
         {questions.questions[currentQuestion].answers.map((answer) => (
-          <button style={{ backgroundColor: isSelected(answer) }} className="question-answer" onClick={() => {
+          <button style={{ backgroundColor: isSelected(answer), color: "white" }} className="question-answer" onClick={() => {
             handleAnswer(answer);
 
           }}>

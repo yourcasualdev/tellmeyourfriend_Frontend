@@ -1,6 +1,13 @@
-@media screen and (max-width: 600px) {
-    .ask-name {
-        font-size: 1.5em;
-    }
-    
+
+.ask-name {
+    font-size: 1.5em;
+    text-align: center;
+    align-items: center;
 }
+.welcome-message {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+
+    

@@ -22,6 +22,7 @@ const Game = () => {
 
     return (
         <div>
+            <header className='header'>Tell Me Your Friend</header>
             {page === "askname" && <Askname name={name} setName={setName} setPage={setPage} />}
             {page === "askquestions" && <Questions name={name} setPage={setPage} questions={questions} />}
         </div>
@@ -31,9 +32,9 @@ const Game = () => {
 const Askname = ({ name, setName, setPage }) => {
     return (
         <div className='ask-name'>
-            <h1>Merhaba Adı?</h1>
-            <TextField label="Outlined" variant="outlined" value={name} onChange={(e) => { setName(e.target.value) }} />
-            <Button variant="contained" onClick={() => { setPage("askquestions") }} >Başla!</Button>
+            <h1 className='welcome-message'>Merhaba Adın?</h1>
+            <TextField style={{}} label="Adın" variant="outlined" value={name} onChange={(e) => { setName(e.target.value) }} />
+            <Button style={{ backgroundColor: "#50394C" }} variant="contained" onClick={() => { setPage("askquestions") }} >Başla!</Button>
         </div>
     )
 }

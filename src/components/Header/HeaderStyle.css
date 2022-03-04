@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap');
+
+
+.page-header{
+    background-color: #000000;
+    height: 100px;
+    width: 100%;
+    top: 0;
+    position: fixed;
+    z-index: 100;
+    text-align: center;
+    padding-top: 30px;
+    color: #F4E1D2;
+}
+
+header > a {
+    color: #F4E1D2;
+    text-decoration: none;
+    font-size: 30px;
+
+}
+header > a:hover {
+    color: #F4E1D2;
+}
